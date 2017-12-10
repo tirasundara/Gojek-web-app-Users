@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe StaticPagesController, type: :controller do
-  render_views
+  
+  describe "Route for the root" do
+    it "routes to static_pages#home" do
+      expect(get: root_url(subdomain: nil)).to route_to(controller: "static_pages", action: "home")
+    end
+  end
 
   describe "GET #home" do
     it "returns http success" do
