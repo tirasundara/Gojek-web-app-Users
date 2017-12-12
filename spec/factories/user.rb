@@ -5,4 +5,11 @@ FactoryBot.define do
     password "whatapassword"
     password_confirmation "whatapassword"
   end
+  
+  factory :invalid_user, parent: :user do
+    name nil
+    email nil
+    password "short"
+    password_confirmation "short"
+  end
 end
