@@ -1,12 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  describe "GET /signup" do
-    it "routes to users#new" do
-      expect(get: signup_path).to route_to(controller: "users", action: "new")
-    end
-  end
-
   describe "GET #new" do
     it "assigns a new Food to @food" do
       get :new
@@ -45,6 +39,11 @@ RSpec.describe UsersController, type: :controller do
         }.to change(User, :count).by(1)
       end
 
+      it "sets a new session for user login automatically" do
+        post :create, params: { user: attributes_for(:user) }
+        expect(session[:user_id]).not_to eq(nil)
+      end
+
       it "redirects to the show user page" do
         post :create, params: { user: attributes_for(:user) }
         expect(response).to redirect_to(user_path(assigns[:user]))
@@ -64,5 +63,4 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-
 end
