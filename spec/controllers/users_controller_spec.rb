@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+
   describe "GET #new" do
     it "assigns a new Food to @food" do
       get :new
@@ -60,6 +61,109 @@ RSpec.describe UsersController, type: :controller do
       it "re-renders the :new template" do
         post :create, params: { user: attributes_for(:invalid_user) }
         expect(response).to render_template(:new)
+      end
+    end
+  end
+
+  describe "GET #edit" do
+    before :each do
+      @user = create(:user)
+      @another_user = create(:user)
+    end
+
+    context "with logged in user" do
+      before :each do
+        log_in_as(@user)
+        get :edit, params: { id: @user }
+      end
+
+      it "assigns the requested user to @user" do
+        expect(assigns[:user]).to eq(@user)
+      end
+      it "renders the :edit template" do
+        expect(response).to render_template(:edit)
+      end
+    end
+
+    context "with non-logged in user" do
+      before { get :edit, params: { id: @user } }
+
+      it "redirects to the homepage" do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "with different logged-in user" do
+      before :each do
+        log_in_as(@another_user)
+        get :edit, params: { id: @user }
+      end
+      it "redirects to the homepage" do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "PATCH #update" do
+    context "with non-logged in user" do
+      before :each do
+        @non_logged_in_user = create(:user)
+        patch :update, params: { id: @non_logged_in_user.id, user: attributes_for(:user, name: "Anugrah memang", password: "", password_confirmation: "") }
+      end
+      it "redirects to the homepage" do
+        expect(response).to redirect_to(root_path)
+      end
+    end
+    
+    context "with logged in user" do
+      before :each do
+        @user = create(:user)
+        @another_user = create(:user)
+        # log_in_as(@user)
+      end
+
+      context "with valid attributes" do
+        before :each do
+          log_in_as(@user)
+          patch :update, params: { id: @user.id, user: attributes_for(:user, name: "Anugrah memang", password: "", password_confirmation: "") }
+        end
+
+        it "locates the requested @user" do
+          expect(assigns(:user)).to eq(@user)
+        end
+        it "updates the user's attributes" do
+          @user.reload
+          expect(@user.name).to match(/Anugrah memang/)
+        end
+        it "redirects to the user_path" do
+          @user.reload
+          expect(response).to redirect_to(@user)
+        end
+      end
+
+      context "with invalid attributes" do
+        before :each do
+          log_in_as(@user)
+          patch :update, params: { id: @user.id, user: attributes_for(:invalid_user, email: "tira@example.com") }
+        end
+
+        it "does not update the user" do
+          @user.reload
+          expect(@user.email).not_to match(/tira@example.com/)
+        end
+        it "re-renders the :edit template" do
+          expect(response).to render_template(:edit)
+        end
+      end
+
+      context "with different logged-in user" do
+        before :each do
+          log_in_as(@another_user)
+          patch :update, params: { id: @user.id, user: attributes_for(:user, name: "Anugrah memang", password: "", password_confirmation: "") }
+        end
+        it "redirects to the homepage" do
+          expect(response).to redirect_to(root_path)
+        end
       end
     end
   end
