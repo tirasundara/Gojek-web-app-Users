@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  get '/users/:id/topup', to: 'users#topup_gopay', as: 'topup_gopay'
+  patch  '/users/:id/topup', to: 'users#update_gopay', as: 'update_gopay'
+
   resources :users
 end

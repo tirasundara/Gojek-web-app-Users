@@ -40,6 +40,11 @@ RSpec.describe UsersController, type: :controller do
         }.to change(User, :count).by(1)
       end
 
+      it "sets default gopay_balance to 0.0" do
+        post :create, params: { user: attributes_for(:user) }
+        expect(assigns[:user].gopay_balance).to eq(0.0)
+      end
+
       it "sets a new session for user login automatically" do
         post :create, params: { user: attributes_for(:user) }
         expect(session[:user_id]).not_to eq(nil)
@@ -114,7 +119,7 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(root_path)
       end
     end
-    
+
     context "with logged in user" do
       before :each do
         @user = create(:user)
@@ -166,5 +171,22 @@ RSpec.describe UsersController, type: :controller do
         end
       end
     end
+  end
+
+  describe "GET #topup_gopay" do
+    before :each do
+      @user = create(:user)
+      get :topup_gopay, params: { id: @user.id }
+    end
+    it "renders the :topup_gopay template" do
+      expect(response).to render_template(:topup_gopay)
+    end
+    it "locates the requested user to @user" do
+      expect(assigns[:user]).to eq(@user)
+    end
+  end
+
+  describe "PATCH #update_gopay" do
+    
   end
 end

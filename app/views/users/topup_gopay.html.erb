@@ -1,0 +1,15 @@
+<%= provide(:title, "Topup GoPay") %>
+<h1>Topup your GoPay</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <p class="text-info">Current balance: <%= @user.gopay_balance %></p>
+    <span class="label label-info"></span>
+    <%= form_for(@user, url: update_gopay_path) do |f| %>
+      <%= render 'shared/error_messages', object: @user %>
+      <%= f.label :topup_amount %>
+      <%= f.text_field :gopay_balance, value: '0', class: 'form-control' %>
+
+      <%= f.submit "Topup GoPay", class: "btn btn-success" %>
+    <% end %>
+  </div>
+</div>
