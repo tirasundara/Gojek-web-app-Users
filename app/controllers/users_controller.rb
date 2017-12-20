@@ -17,11 +17,18 @@ class UsersController < ApplicationController
   end
 
   def new_order
+    @order_errors = {}
   end
 
   def initialize_order
+    @order_errors = {}
     init_order_response = RestClient.get(BASE_ORDER_API_URL+initialize_order_params)
-    @order = JSON.parse(init_order_response.body)
+    if JSON.parse(init_order_response.body).size > 5
+      @order = JSON.parse(init_order_response.body)
+    else
+      @order_errors = JSON.parse(init_order_response.body)
+      render :new_order
+    end
   end
 
   def confirm_order

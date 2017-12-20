@@ -5,6 +5,8 @@
 
     <h1>New Order</h1>
     <%= form_tag(initialize_order_path, method: :post) do %>
+      <%= render 'shared/error_order', object: @error_order %>
+      
       <%= hidden_field_tag 'user_id', current_user.id %>
 
       <%= label_tag 'Pickup Adress' %>

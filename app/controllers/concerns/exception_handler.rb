@@ -13,7 +13,7 @@ module ExceptionHandler
 
     rescue_from RestClient::UnprocessableEntity do
       flash[:danger] = "Whoopssss. Something went wrong..."
-      redirect_to new_order_path(current_user)
+      render :new_order
     end
   end
 end
