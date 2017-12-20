@@ -96,6 +96,8 @@ class UsersController < ApplicationController
     if @user.valid?
       @user.gopay_balance += old_gopay_balance
       @user.save
+      gopay_attributes = { id: @user.id, gopay_balance: @user.gopay_balance }
+      $kafka_producer.produce(gopay_attributes.to_json, topic: "gopay-topup")
       flash[:success] = "Topup success."
       redirect_to @user
     else
