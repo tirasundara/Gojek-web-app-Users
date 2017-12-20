@@ -1,0 +1,29 @@
+<%= provide(:title, "Confirm Order") %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="alert alert-info">
+      <h1>Confirm your Order</h1>
+      <p>To continue, pelase confirm your order:</p>
+      <p>Pickup address: <%= @order["origin"] %></p>
+      <p>Destination address: <%= @order["destination"] %></p>
+      <p>Distance (km): <%= @order["distance"] %></p>
+      <p>Est. price: <%= @order["price"] %></p>
+      <p>Payment type: <%= @order["payment_type"] %></p>
+      <p>Service type: <%= @order["service_type"] %></p>
+
+      <%= form_tag confirm_order_path, method: :post do %>
+        <%#= render 'shared/order_error_messages', object: @order %>
+
+        <%= hidden_field_tag 'origin', @order["origin"] %>
+        <%= hidden_field_tag 'destination', @order["destination"] %>
+        <%= hidden_field_tag 'price', @order["price"] %>
+        <%= hidden_field_tag 'distance', @order["distance"] %>
+        <%= hidden_field_tag 'payment_type', @order["payment_type"] %>
+        <%= hidden_field_tag 'service_type', @order["service_type"] %>
+
+        <%= submit_tag "Confrim", class: "btn btn-success" %>
+        <%= link_to "Cancel", new_order_path, class: "btn btn-danger" %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -18,4 +18,10 @@ RSpec.describe 'Users Routing', type: :routing do
       expect(patch("/users/1/topup")).to route_to("users#update_gopay", id: '1')
     end
   end
+
+  describe "GET /users/:id/orders/history" do
+    it "routet to users#orders_history" do
+      expect(get("/users/1/orders/history")).to route_to("users#orders_history", id: '1')
+    end
+  end
 end

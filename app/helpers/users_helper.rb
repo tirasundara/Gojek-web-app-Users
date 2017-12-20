@@ -1,6 +1,7 @@
 module UsersHelper
+  BASE_ORDER_API_URL = "http://localhost:3001/api/v1/orders"
 
-  # Returns the Gavatar for the given user
+
   def gravatar_for(user, options = { size: 80 })
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
     size = options[:size]

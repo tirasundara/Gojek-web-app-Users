@@ -1,0 +1,32 @@
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Order Date</th>
+        <th>Go Service</th>
+        <th>Driver</th>
+        <th>Origin</th>
+        <th>Destination</th>
+        <th>Distance</th>
+        <th>Price</th>
+        <th>Payment Type</th>
+        <th>Order Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+      <tr>
+        <td><%= order["created_at"] %></td>
+        <td><%= order["service_type"] %></td>
+        <td><%= order["status"] == "Driver not found" ? "-" : order["driver"]["name"] %></td>
+        <td><%= order["origin"] %></td>
+        <td><%= order["destination"] %></td>
+        <td><%= order["distance"] %></td>
+        <td><%= order["price"] %></td>
+        <td><%= order["payment_type"] %></td>
+        <td><%= order["status"] %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

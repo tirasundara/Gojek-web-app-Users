@@ -1,0 +1,16 @@
+<%= provide(:title, "Current Order") %>
+<div class="row">
+<% if @order.nil? %>
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Info</div>
+      <div class="panel-body"><p>You have no an active order. You can check your <%= link_to "order history", order_history_path(current_user) %> or create a <%= link_to "new", new_order_path(current_user) %> one.</p></div>
+    </div>
+  </div>
+    <% else %>
+      <%= render 'driver_not_found' if @order["status"] == "Driver not found" %>
+      <h1>Your Recent Order</h1>
+      <%= render 'current_order_info' %>
+    <% end %>
+
+</div>

@@ -1,0 +1,26 @@
+<%= provide(:title, 'New Order') %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+
+    <h1>New Order</h1>
+    <%= form_tag(initialize_order_path, method: :post) do %>
+      <%= hidden_field_tag 'user_id', current_user.id %>
+
+      <%= label_tag 'Pickup Adress' %>
+      <%= text_field_tag 'origin', nil, placeholder: 'Please be more spesific, eg: Sarinah Mall, Jakarta', class: 'form-control' %>
+
+      <%= label_tag 'destination Adress' %>
+      <%= text_field_tag 'destination', nil, placeholder: 'Please be more spesific, eg: Blok M Square, Jakarta', class: 'form-control' %>
+
+      <%= label_tag 'Service Type' %>
+      <%= select_tag 'service_type', options_for_select([["Go-Ride", "Go-Ride"], ["Go-Car", "Go-Car"]]) %>
+
+      <%= label_tag 'Payment Type' %>
+      <%= select_tag 'payment_type', options_for_select([["Cash", "Cash"], ["GoPay", "GoPay"]]) %>
+
+      <%= submit_tag 'Create Order', class: 'btn btn-success' %>
+    <% end %>
+
+  </div>
+</div>

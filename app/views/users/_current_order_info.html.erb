@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <th>Go Service</th>
+      <th>Driver</th>
+      <th>Origin</th>
+      <th>Destination</th>
+      <th>Distance</th>
+      <th>Price</th>
+      <th>Payment Type</th>
+      <th>Order status</th>
+    </thead>
+    <tbody>
+      <td><%= @order['service_type'] %></td>
+      <td><%= @order['driver']['name'] unless (@order['status'] == 'Looking for driver' || @order['status'] == 'Driver not found') %></td>
+      <td><%= @order['origin'] %></td>
+      <td><%= @order['destination'] %></td>
+      <td><%= @order['distance'] %></td>
+      <td><%= @order['price'] %></td>
+      <td><%= @order['payment_type'] %></td>
+      <td><%= @order['status'] %></td>
+    </tbody>
+  </table>
+</div>

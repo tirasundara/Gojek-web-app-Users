@@ -1,0 +1,14 @@
+<%= provide(:title, "Orders History") %>
+<div class="row">
+<h1>Orders History</h1>
+  <% if @orders.empty? %>
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-heading">Info</div>
+        <div class="panel-body"><p>You have no completed order yet. Start your first order <%= link_to "here", new_order_path(current_user) %>.</p></div>
+      </div>
+    </div>
+      <% else %>
+        <%= render 'user_orders_history' %>
+      <% end %>
+</div>
