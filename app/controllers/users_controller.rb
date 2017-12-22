@@ -69,6 +69,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
+
+      # profile_attributes = { id: @user.id, name: @user.name, email: @user.email, phone: @user.phone }
+      # $kafka_producer.produce(profile_attributes.to_json, topic: "new-user-profile")
+
+      $kafka_producer.produce(user_params.to_json, topic: "new-user-profile")
+
       flash[:success] = "Welcome to the Go-JEK Web App!"
       redirect_to @user
     else
@@ -109,7 +115,7 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       @user.gopay_balance = old_gopay_balance
-      flash[:danger] = "Topup failed."
+      flash.now[:danger] = "Topup failed."
       render :topup_gopay
     end
   end

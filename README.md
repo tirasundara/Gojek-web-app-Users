@@ -1,5 +1,39 @@
 # Go-Scholar Final Project
 
+## Description
+This repo act as a Users client which consumes Orders API from the https://github.com/tirasundara/gojek-web-app-Orders-Drivers-Services
+
+## Configuration
+Make sure you already install and configure apache Kafka on your system. The Kafka and Zookeeper configuration may look like this:
+- Kafka Server: localhost:9092
+- Zookeeper: localhost:2181
+- This service run on http://localhost:3000
+- Orders and Drivers service on http://localhost:3001
+
+## Kafka producer and consumers
+This Gojek-Web-App has 4 Kafka producers and 4 consumers. I assume you run this service on port 3000, and Orders and Drivers service on port 3001.
+
+## How to run
+- run your Zookeeper and Apache Kafka server
+- run the consumers with these commands (on :3001):
+```bash
+    $ bundle exec racecar UpdateUserProfileConsumer
+    $ bundle exec bundle exec racecar UserGopayTopupConsumer
+    $ bundle exec racecar NewUserConsumer
+```
+- run this command (on :3000):
+```bash
+   $ bundle exec racecar GopayUpdateConsumer
+```
+
+## Orders API Endpoints
+- GET :3001/api/v1/orders
+- GET :3001/api/v1/orders/new
+- GET :3001/api/v1/orders/:id
+- POST :3001/api/v1/orders
+
+
+From the mentors:
 ## Rules
 
 - Please try to make use of all knowledge that you have gained throughout this course
