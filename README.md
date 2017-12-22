@@ -18,7 +18,7 @@ This Gojek-Web-App has 4 Kafka producers and 4 consumers. I assume you run this 
 - run the consumers with these commands (on :3001):
 ```bash
     $ bundle exec racecar UpdateUserProfileConsumer
-    $ bundle exec bundle exec racecar UserGopayTopupConsumer
+    $ bundle exec racecar UserGopayTopupConsumer
     $ bundle exec racecar NewUserConsumer
 ```
 - run this command (on :3000):
